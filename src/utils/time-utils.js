@@ -41,25 +41,29 @@ export function formatTimeShort(milliseconds) {
 }
 
 /**
- * Get today's date in YYYY-MM-DD format
+ * Get today's date in YYYY-MM-DD format using Indian Standard Time (IST)
  */
 export function getTodayDateKey() {
   const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
+  // Convert to IST (UTC+5:30)
+  const istTime = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+  const year = istTime.getUTCFullYear();
+  const month = String(istTime.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(istTime.getUTCDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
 /**
- * Get date key for N days ago
+ * Get date key for N days ago using Indian Standard Time (IST)
  */
 export function getDateKeyNDaysAgo(daysAgo) {
-  const date = new Date();
-  date.setDate(date.getDate() - daysAgo);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const now = new Date();
+  // Convert to IST (UTC+5:30)
+  const istTime = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+  istTime.setUTCDate(istTime.getUTCDate() - daysAgo);
+  const year = istTime.getUTCFullYear();
+  const month = String(istTime.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(istTime.getUTCDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 

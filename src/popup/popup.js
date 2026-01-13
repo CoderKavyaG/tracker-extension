@@ -40,6 +40,7 @@ const backBtn = document.getElementById('backBtn');
 const allDomainsToday = document.getElementById('allDomainsToday');
 const categoryBreakdown = document.getElementById('categoryBreakdown');
 const last7Days = document.getElementById('last7Days');
+const graphBars = document.getElementById('graphBars');
 const clearDataBtn = document.getElementById('clearDataBtn');
 
 // Tabs
@@ -134,6 +135,16 @@ function createEmptyState() {
   div.className = 'empty-state';
   div.innerHTML = '<p class="empty-state-text">No data yet. Keep browsing!</p>';
   return div;
+}
+
+/**
+ * Get day of week abbreviation (Mon, Tue, etc)
+ */
+function getDayOfWeek(dateKey) {
+  const [year, month, day] = dateKey.split('-');
+  const date = new Date(year, parseInt(month) - 1, parseInt(day));
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return days[date.getDay()];
 }
 
 // ============ UPDATE FUNCTIONS ============
@@ -244,8 +255,6 @@ async function updateLast7DaysContent() {
   try {
     const last7Data = await getLastNDaysData(7);
 
-    last7Days.innerHTML = '';
-    
     // Generate data for each of the last 7 days
     const dayEntries = [];
     for (let i = 0; i < 7; i++) {
@@ -255,9 +264,37 @@ async function updateLast7DaysContent() {
       dayEntries.push({ dateKey, time: dayTime });
     }
 
+    // Reverse so most recent is on the right
+    dayEntries.reverse();
+
+    // Update graph
+    if (dayEntries.every(e => e.time === 0)) {
+      graphBars.innerHTML = '<div class="empty-state"><p class="empty-state-text">No data yet. Keep browsing!</p></div>';
+    } else {
+      const maxTime = Math.max(...dayEntries.map(e => e.time), 1);
+      graphBars.innerHTML = dayEntries.map(({ dateKey, time }) => {
+        const percentage = (time / maxTime) * 100;
+        const isToday = dateKey === getTodayDateKey();
+        const dayLabel = isToday ? 'Today' : formatDateKey(dateKey);
+        const dayOfWeek = getDayOfWeek(dateKey);
+        
+        return `
+          <div class="graph-bar">
+            <div class="bar-time">${formatTimeShort(time)}</div>
+            <div class="bar-column" style="height: ${Math.max(percentage, 5)}%;" title="${formatTime(time)}"></div>
+            <div class="bar-label">${dayOfWeek}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Update list
+    last7Days.innerHTML = '';
     if (dayEntries.every(e => e.time === 0)) {
       last7Days.appendChild(createEmptyState());
     } else {
+      // Reverse again for display (most recent first)
+      dayEntries.reverse();
       dayEntries.forEach(({ dateKey, time }) => {
         const item = document.createElement('div');
         item.className = 'day-item';

@@ -49,7 +49,7 @@ export async function getDayTotalTime(dateKey) {
 }
 
 /**
- * Get all data for last N days
+ * Get all data for last N days using Indian Standard Time (IST)
  */
 export async function getLastNDaysData(n) {
   return new Promise((resolve) => {
@@ -58,11 +58,13 @@ export async function getLastNDaysData(n) {
       const data = {};
       
       for (let i = 0; i < n; i++) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
+        const now = new Date();
+        // Convert to IST (UTC+5:30)
+        const istTime = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+        istTime.setUTCDate(istTime.getUTCDate() - i);
+        const year = istTime.getUTCFullYear();
+        const month = String(istTime.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(istTime.getUTCDate()).padStart(2, '0');
         const dateKey = `${year}-${month}-${day}`;
         
         if (tracker[dateKey]) {
