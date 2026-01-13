@@ -558,11 +558,13 @@ html, body {
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
-    gap: 10px;
+    gap: 8px;
     height: 200px;
     padding: 8px 0;
     border-top: 1px solid #2a2a2a;
-    overflow: hidden;
+    overflow: visible;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .graph-bar {
@@ -573,6 +575,8 @@ html, body {
     gap: 6px;
     height: 100%;
     justify-content: flex-end;
+    min-width: 0;
+    overflow: visible;
 }
 
 .bar-column {
@@ -590,6 +594,8 @@ html, body {
     position: relative;
     overflow: hidden;
     will-change: height, background;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .bar-column::before {
