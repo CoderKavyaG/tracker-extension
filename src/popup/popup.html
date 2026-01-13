@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Time Tracker</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <!-- Loading State -->
+    <div id="loadingState" class="container">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Compact View -->
+    <div id="compactView" class="container hidden">
+        <div class="header">
+            <h1>Today's Usage</h1>
+            <button id="expandBtn" class="expand-btn" title="Show more details">
+                <span>⋮</span>
+            </button>
+        </div>
+
+        <div class="total-time-section">
+            <div class="total-time-label">Total Time</div>
+            <div id="compactTotalTime" class="total-time-value">--:--</div>
+        </div>
+
+        <div class="top-domains">
+            <div class="section-title">Top 3 Websites</div>
+            <div id="compactTopDomains" class="domain-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button id="viewDetailsBtn" class="btn btn-primary">View Details</button>
+        </div>
+    </div>
+
+    <!-- Expanded View -->
+    <div id="expandedView" class="container hidden">
+        <div class="header">
+            <button id="backBtn" class="back-btn" title="Back to compact view">
+                <span>←</span>
+            </button>
+            <h1>Screen Time Details</h1>
+            <div style="width: 24px;"></div> <!-- Spacer for centering -->
+        </div>
+
+        <!-- Tabs for navigation -->
+        <div class="tabs">
+            <button id="tabToday" class="tab active" data-tab="today">Today</button>
+            <button id="tabCategory" class="tab" data-tab="category">Categories</button>
+            <button id="tabWeek" class="tab" data-tab="week">Last 7 Days</button>
+        </div>
+
+        <!-- Today Tab Content -->
+        <div id="todayContent" class="tab-content active">
+            <div class="section-title">Today's Websites</div>
+            <div id="allDomainsToday" class="domain-list-full">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Category Tab Content -->
+        <div id="categoryContent" class="tab-content hidden">
+            <div class="section-title">Time by Category</div>
+            <div id="categoryBreakdown" class="category-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Week Tab Content -->
+        <div id="weekContent" class="tab-content hidden">
+            <div class="section-title">Last 7 Days</div>
+            <div id="last7Days" class="week-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <div class="action-bar">
+            <button id="clearDataBtn" class="btn btn-secondary">Clear All Data</button>
+        </div>
+    </div>
+
+    <script src="popup.js" type="module"></script>
+</body>
+</html>
