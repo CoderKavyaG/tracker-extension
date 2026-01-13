@@ -319,18 +319,20 @@ async function updateLast7DaysContent() {
       graphBars.innerHTML = dayEntries.map(({ dateKey, time }, index) => {
         // Use non-linear scaling for better visual distinction
         // This makes smaller differences appear bigger
-        const percentage = Math.max((Math.pow(time / maxTime, 0.7) * 100), 6);
+        const percentage = Math.max((Math.pow(time / maxTime, 0.65) * 100), 4);
         const isToday = dateKey === getTodayDateKey();
         const dayOfWeek = getDayOfWeek(dateKey);
         
-        // Color variation based on time - darker bars for higher values
-        const colorIntensity = Math.round(100 + (time / maxTime) * 150); // 100-250
-        const barColor = `hsl(0, 0%, ${colorIntensity / 3}%)`; // Creates different gray levels
+        // Generate distinct colors based on time intensity
+        // Lower time = lighter gray, Higher time = darker gray
+        const intensity = time / maxTime; // 0 to 1
+        const lightness = Math.round(45 - (intensity * 25)); // 45% to 20% (darker as time increases)
+        const barGradient = `linear-gradient(180deg, hsl(0, 0%, ${lightness + 15}%) 0%, hsl(0, 0%, ${lightness - 5}%) 100%)`;
         
         return `
           <div class="graph-bar">
             <div class="bar-time">${formatTimeShort(time)}</div>
-            <div class="bar-column" style="height: ${percentage}%; background: linear-gradient(180deg, #${Math.round(colorIntensity * 2).toString(16)} 0%, #${Math.round(colorIntensity).toString(16)} 100%);" title="Day: ${dayOfWeek}\nDate: ${dateKey}\nTime: ${formatTime(time)}"></div>
+            <div class="bar-column" style="height: ${percentage}%; background: ${barGradient};" title="Day: ${dayOfWeek}\nDate: ${dateKey}\nTime: ${formatTime(time)}"></div>
             <div class="bar-label">${dayOfWeek}</div>
           </div>
         `;
