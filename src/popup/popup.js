@@ -9,15 +9,15 @@ import {
   getLastNDaysData,
   getTopDomains,
   clearAllData,
-} from '/src/utils/storage.js';
+} from '../utils/storage.js';
 import {
   formatTime,
   formatTimeShort,
   getTodayDateKey,
   getDateKeyNDaysAgo,
   formatDateKey,
-} from '/src/utils/time-utils.js';
-import { getCategoryForDomain } from '/src/utils/categories.js';
+} from '../utils/time-utils.js';
+import { getCategoryForDomain } from '../utils/categories.js';
 
 // ============ STATE ============
 
@@ -317,7 +317,7 @@ backBtn.addEventListener('click', () => {
  * Tab switching
  */
 tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
+  tab.addEventListener('click', async () => {
     // Update active tab
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
@@ -330,10 +330,13 @@ tabs.forEach(tab => {
 
     if (tabName === 'today') {
       document.getElementById('todayContent').classList.add('active');
+      await updateTodayContent();
     } else if (tabName === 'category') {
       document.getElementById('categoryContent').classList.add('active');
+      await updateCategoryContent();
     } else if (tabName === 'week') {
       document.getElementById('weekContent').classList.add('active');
+      await updateLast7DaysContent();
     }
   });
 });
@@ -351,23 +354,44 @@ clearDataBtn.addEventListener('click', async () => {
 // ============ AUTO-REFRESH ============
 
 /**
- * Refresh data every 2 seconds when popup is open
+ * Refresh data every 1 second when popup is open
  * This ensures we see live updates
  */
-const refreshInterval = setInterval(async () => {
-  if (currentView === 'compact') {
-    await updateCompactView();
-  } else {
-    await updateTodayContent();
-    await updateCategoryContent();
-  }
-}, 2000);
+let refreshInterval;
+
+function startAutoRefresh() {
+  // Clear any existing interval first
+  if (refreshInterval) clearInterval(refreshInterval);
+  
+  refreshInterval = setInterval(async () => {
+    try {
+      if (currentView === 'compact') {
+        await updateCompactView();
+      } else {
+        // Update the currently active tab content
+        const activeTab = document.querySelector('.tab.active');
+        if (activeTab) {
+          const tabName = activeTab.getAttribute('data-tab');
+          if (tabName === 'today') {
+            await updateTodayContent();
+          } else if (tabName === 'category') {
+            await updateCategoryContent();
+          } else if (tabName === 'week') {
+            await updateLast7DaysContent();
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[Popup] Auto-refresh error:', error);
+    }
+  }, 1000); // Refresh every 1 second for live updates
+}
 
 /**
  * Clear interval when popup closes
  */
 window.addEventListener('unload', () => {
-  clearInterval(refreshInterval);
+  if (refreshInterval) clearInterval(refreshInterval);
 });
 
 // ============ INITIALIZATION ============
@@ -375,3 +399,4 @@ window.addEventListener('unload', () => {
 // Load data on popup open
 console.log('[Popup] Popup script loaded, initializing...');
 updateAllViews();
+startAutoRefresh();
