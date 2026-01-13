@@ -558,8 +558,8 @@ html, body {
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
-    gap: 6px;
-    height: 120px;
+    gap: 8px;
+    height: 140px;
     padding: 8px 0;
     border-top: 1px solid #2a2a2a;
 }
@@ -574,34 +574,50 @@ html, body {
 
 .bar-column {
     width: 100%;
-    background-color: #505050;
-    border-radius: 3px 3px 0 0;
-    min-height: 2px;
-    max-height: 100px;
+    background: linear-gradient(180deg, #505050 0%, #3a3a3a 100%);
+    border-radius: 4px 4px 0 0;
+    min-height: 4px;
+    max-height: 120px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid #4a4a4a;
+    position: relative;
+    overflow: hidden;
+}
+
+.bar-column::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
 .bar-column:hover {
-    background-color: #707070;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    background: linear-gradient(180deg, #707070 0%, #505050 100%);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+    border-color: #5a5a5a;
 }
 
 .bar-label {
     font-size: 10px;
     color: #808080;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
     min-width: 35px;
+    margin-top: 4px;
 }
 
 .bar-time {
-    font-size: 9px;
+    font-size: 10px;
     color: #a0a0a0;
     font-weight: 700;
     text-align: center;
-    height: 12px;
+    height: 14px;
     white-space: nowrap;
+    min-width: 35px;
 }
 
 /* ============ SPINNER (LOADING) ============ */

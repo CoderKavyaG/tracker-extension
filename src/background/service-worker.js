@@ -40,12 +40,12 @@ async function recordDomainTime(domain) {
 
   const elapsedTime = Date.now() - trackingState.startTime;
   
-  // Only record if at least 1 second has passed (avoid noise)
-  if (elapsedTime > 1000) {
+  // Record all time (even less than 1 second) to ensure accuracy
+  if (elapsedTime > 0) {
     const dateKey = getTodayDateKey();
     await addDomainTime(dateKey, domain, elapsedTime);
     console.log(
-      `[Tracker] Recorded ${domain}: ${elapsedTime}ms on ${dateKey}`
+      `[Tracker] Recorded ${domain}: ${elapsedTime}ms (${(elapsedTime / 1000).toFixed(2)}s) on ${dateKey}`
     );
   }
 }
@@ -53,11 +53,11 @@ async function recordDomainTime(domain) {
 /**
  * Start tracking a new domain
  */
-function startTracking(domain, tabId, windowId) {
+async function startTracking(domain, tabId, windowId) {
   // First, record time for previous domain (if any) - ALWAYS record before switching
   if (trackingState.currentDomain && trackingState.startTime) {
     console.log('[Tracker] Recording time for domain before switch:', trackingState.currentDomain);
-    recordDomainTime(trackingState.currentDomain);
+    await recordDomainTime(trackingState.currentDomain);
   }
 
   // Update state for new domain
@@ -118,7 +118,7 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
 
     const domain = normalizeDomain(extractDomain(tab.url));
     console.log('[Tracker] Switching to domain:', domain);
-    startTracking(domain, tabId, windowId);
+    await startTracking(domain, tabId, windowId);
   } catch (error) {
     console.error('[Tracker] Error in onActivated:', error);
   }
@@ -153,7 +153,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       
       // Only update if domain actually changed
       if (newDomain !== trackingState.currentDomain) {
-        startTracking(newDomain, tabId, trackingState.currentWindowId);
+        await startTracking(newDomain, tabId, trackingState.currentWindowId);
       }
     } catch (error) {
       console.error('[Tracker] Error in onUpdated:', error);
@@ -192,7 +192,7 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
         }
         
         const domain = normalizeDomain(extractDomain(tab.url));
-        startTracking(domain, tab.id, windowId);
+        await startTracking(domain, tab.id, windowId);
       }
     } catch (error) {
       console.error('[Tracker] Error resuming tracking on window focus:', error);

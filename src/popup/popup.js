@@ -317,7 +317,8 @@ async function updateLast7DaysContent() {
       const maxTime = Math.max(...dayEntries.map(e => e.time), 1);
       console.log('[Popup] Last7Days - Max time:', maxTime);
       graphBars.innerHTML = dayEntries.map(({ dateKey, time }) => {
-        const percentage = (time / maxTime) * 100;
+        // Use quadratic scaling for better visual distinction between bars
+        const percentage = Math.max((time / maxTime) * 100, 8);
         const isToday = dateKey === getTodayDateKey();
         const dayLabel = isToday ? 'Today' : formatDateKey(dateKey);
         const dayOfWeek = getDayOfWeek(dateKey);
@@ -325,7 +326,7 @@ async function updateLast7DaysContent() {
         return `
           <div class="graph-bar">
             <div class="bar-time">${formatTimeShort(time)}</div>
-            <div class="bar-column" style="height: ${Math.max(percentage, 5)}%;" title="${formatTime(time)}"></div>
+            <div class="bar-column" style="height: ${percentage}%;" title="${formatTime(time)}"></div>
             <div class="bar-label">${dayOfWeek}</div>
           </div>
         `;
