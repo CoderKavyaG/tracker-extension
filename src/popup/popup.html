@@ -22,6 +22,12 @@
             </button>
         </div>
 
+        <!-- Date Display for Compact View -->
+        <div class="date-header" style="padding: 8px 16px; background-color: #fafafa; border-bottom: 1px solid #e5e5e5;">
+            <span id="dateDisplayCompact"></span>
+            <span id="dayDisplayCompact"></span>
+        </div>
+
         <div class="total-time-section">
             <div class="total-time-label">Total Time</div>
             <div id="compactTotalTime" class="total-time-value">--:--</div>
@@ -71,7 +77,7 @@
         </div>
 
         <!-- Category Tab Content -->
-        <div id="categoryContent" class="tab-content hidden">
+        <div id="categoryContent" class="tab-content">
             <div class="section-title">Time by Category</div>
             <div id="categoryBreakdown" class="category-list">
                 <!-- Populated by JS -->
@@ -79,7 +85,7 @@
         </div>
 
         <!-- Week Tab Content -->
-        <div id="weekContent" class="tab-content hidden">
+        <div id="weekContent" class="tab-content">
             <div class="section-title">Last 7 Days</div>
             
             <!-- Graph Container -->

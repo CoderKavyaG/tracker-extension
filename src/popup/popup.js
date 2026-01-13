@@ -43,6 +43,8 @@ const last7Days = document.getElementById('last7Days');
 const graphBars = document.getElementById('graphBars');
 const dateDisplay = document.getElementById('dateDisplay');
 const dayDisplay = document.getElementById('dayDisplay');
+const dateDisplayCompact = document.getElementById('dateDisplayCompact');
+const dayDisplayCompact = document.getElementById('dayDisplayCompact');
 const clearDataBtn = document.getElementById('clearDataBtn');
 
 // Tabs
@@ -159,8 +161,16 @@ function updateDateHeader() {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   
-  dateDisplay.textContent = `${months[date.getMonth()]} ${day}, ${year}`;
-  dayDisplay.textContent = `(${days[date.getDay()]})`;
+  const dateStr = `${months[date.getMonth()]} ${day}, ${year}`;
+  const dayStr = `(${days[date.getDay()]})`;
+  
+  // Update expanded view
+  dateDisplay.textContent = dateStr;
+  dayDisplay.textContent = dayStr;
+  
+  // Update compact view
+  dateDisplayCompact.textContent = dateStr;
+  dayDisplayCompact.textContent = dayStr;
 }
 
 // ============ UPDATE FUNCTIONS ============
@@ -223,12 +233,15 @@ async function updateTodayContent() {
  * Update expanded view - category tab
  */
 async function updateCategoryContent() {
+  console.log('[Popup] ===== CATEGORY UPDATE STARTING =====');
   try {
     const dateKey = getTodayDateKey();
+    console.log('[Popup] Category - Today dateKey:', dateKey);
     const dayData = await getDayData(dateKey);
     
-    console.log('[Popup] Category - Today dateKey:', dateKey);
     console.log('[Popup] Category - Day data:', dayData);
+    console.log('[Popup] Category - Day data keys:', Object.keys(dayData));
+    console.log('[Popup] Category - Day data entries:', Object.entries(dayData));
 
     // Group by category
     const categoryData = {};
