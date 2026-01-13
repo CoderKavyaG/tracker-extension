@@ -317,22 +317,23 @@ async function updateLast7DaysContent() {
       const maxTime = Math.max(...dayEntries.map(e => e.time), 1);
       console.log('[Popup] Last7Days - Max time:', maxTime, 'milliseconds');
       graphBars.innerHTML = dayEntries.map(({ dateKey, time }, index) => {
-        // Use non-linear scaling for better visual distinction
-        // This makes smaller differences appear bigger
-        const percentage = Math.max((Math.pow(time / maxTime, 0.65) * 100), 4);
+        // Use square root scaling for DRAMATIC visual distinction
+        // This makes smaller values appear much more distinct
+        const sqrtRatio = Math.sqrt(time / maxTime);
+        const percentage = Math.max((sqrtRatio * 100), 2);
         const isToday = dateKey === getTodayDateKey();
         const dayOfWeek = getDayOfWeek(dateKey);
         
         // Generate distinct colors based on time intensity
         // Lower time = lighter gray, Higher time = darker gray
         const intensity = time / maxTime; // 0 to 1
-        const lightness = Math.round(45 - (intensity * 25)); // 45% to 20% (darker as time increases)
-        const barGradient = `linear-gradient(180deg, hsl(0, 0%, ${lightness + 15}%) 0%, hsl(0, 0%, ${lightness - 5}%) 100%)`;
+        const lightness = Math.round(50 - (intensity * 30)); // 50% to 20% (darker as time increases)
+        const barGradient = `linear-gradient(180deg, hsl(0, 0%, ${lightness + 12}%) 0%, hsl(0, 0%, ${lightness - 8}%) 100%)`;
         
         return `
           <div class="graph-bar">
             <div class="bar-time">${formatTimeShort(time)}</div>
-            <div class="bar-column" style="height: ${percentage}%; background: ${barGradient};" title="Day: ${dayOfWeek}\nDate: ${dateKey}\nTime: ${formatTime(time)}"></div>
+            <div class="bar-column" style="height: ${percentage}%;" data-height="${percentage}" title="Day: ${dayOfWeek}\nDate: ${dateKey}\nTime: ${formatTime(time)}"></div>
             <div class="bar-label">${dayOfWeek}</div>
           </div>
         `;

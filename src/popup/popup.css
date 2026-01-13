@@ -559,7 +559,7 @@ html, body {
     align-items: flex-end;
     justify-content: space-around;
     gap: 10px;
-    height: 150px;
+    height: 200px;
     padding: 8px 0;
     border-top: 1px solid #2a2a2a;
 }
@@ -574,10 +574,10 @@ html, body {
 
 .bar-column {
     width: 100%;
-    background: linear-gradient(180deg, #505050 0%, #3a3a3a 100%);
-    border-radius: 6px 6px 0 0;
-    min-height: 3px;
-    max-height: 130px;
+    background: linear-gradient(180deg, #606060 0%, #404040 100%);
+    border-radius: 8px 8px 0 0;
+    min-height: 2px;
+    max-height: 180px;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 
         0 4px 12px rgba(0, 0, 0, 0.5), 
@@ -587,6 +587,7 @@ html, body {
     position: relative;
     overflow: hidden;
     will-change: height, background;
+    flex-grow: 0;
 }
 
 .bar-column::before {
@@ -610,7 +611,7 @@ html, body {
 }
 
 .bar-column:hover {
-    background: linear-gradient(180deg, #606060 0%, #404040 100%);
+    background: linear-gradient(180deg, #707070 0%, #505050 100%);
     box-shadow: 
         0 8px 16px rgba(0, 0, 0, 0.6), 
         inset 0 2px 0 rgba(255, 255, 255, 0.15), 
