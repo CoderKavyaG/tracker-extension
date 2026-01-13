@@ -41,6 +41,8 @@ const allDomainsToday = document.getElementById('allDomainsToday');
 const categoryBreakdown = document.getElementById('categoryBreakdown');
 const last7Days = document.getElementById('last7Days');
 const graphBars = document.getElementById('graphBars');
+const dateDisplay = document.getElementById('dateDisplay');
+const dayDisplay = document.getElementById('dayDisplay');
 const clearDataBtn = document.getElementById('clearDataBtn');
 
 // Tabs
@@ -147,6 +149,20 @@ function getDayOfWeek(dateKey) {
   return days[date.getDay()];
 }
 
+/**
+ * Update date header with today's date and day
+ */
+function updateDateHeader() {
+  const today = getTodayDateKey();
+  const [year, month, day] = today.split('-');
+  const date = new Date(year, parseInt(month) - 1, parseInt(day));
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+  dateDisplay.textContent = `${months[date.getMonth()]} ${day}, ${year}`;
+  dayDisplay.textContent = `(${days[date.getDay()]})`;
+}
+
 // ============ UPDATE FUNCTIONS ============
 
 /**
@@ -210,23 +226,33 @@ async function updateCategoryContent() {
   try {
     const dateKey = getTodayDateKey();
     const dayData = await getDayData(dateKey);
+    
+    console.log('[Popup] Category - Today dateKey:', dateKey);
+    console.log('[Popup] Category - Day data:', dayData);
 
     // Group by category
     const categoryData = {};
     Object.entries(dayData).forEach(([domain, time]) => {
       const category = getCategoryForDomain(domain);
+      console.log('[Popup] Category - Domain:', domain, 'Category:', category, 'Time:', time);
       categoryData[category] = (categoryData[category] || 0) + time;
     });
+
+    console.log('[Popup] Category - Grouped data:', categoryData);
 
     // Sort by time
     const sorted = Object.entries(categoryData)
       .sort((a, b) => b[1] - a[1]);
 
+    console.log('[Popup] Category - Sorted:', sorted);
+
     categoryBreakdown.innerHTML = '';
     if (sorted.length === 0) {
+      console.log('[Popup] Category - No data, showing empty state');
       categoryBreakdown.appendChild(createEmptyState());
     } else {
       sorted.forEach(([category, time]) => {
+        console.log('[Popup] Adding category item:', category, formatTime(time));
         const item = document.createElement('div');
         item.className = 'category-item';
         
@@ -254,13 +280,15 @@ async function updateCategoryContent() {
 async function updateLast7DaysContent() {
   try {
     const last7Data = await getLastNDaysData(7);
+    console.log('[Popup] Last7Days - Full data:', last7Data);
 
     // Generate data for each of the last 7 days
     const dayEntries = [];
     for (let i = 0; i < 7; i++) {
       const dateKey = getDateKeyNDaysAgo(i);
-      const dayTime = Object.values(last7Data[dateKey] || {})
-        .reduce((sum, time) => sum + time, 0);
+      const dayData = last7Data[dateKey] || {};
+      const dayTime = Object.values(dayData).reduce((sum, time) => sum + time, 0);
+      console.log('[Popup] Last7Days - Date:', dateKey, 'Data:', dayData, 'Total:', dayTime);
       dayEntries.push({ dateKey, time: dayTime });
     }
 
@@ -268,10 +296,13 @@ async function updateLast7DaysContent() {
     dayEntries.reverse();
 
     // Update graph
+    console.log('[Popup] Last7Days - Day entries:', dayEntries);
     if (dayEntries.every(e => e.time === 0)) {
+      console.log('[Popup] Last7Days - No data, showing empty state');
       graphBars.innerHTML = '<div class="empty-state"><p class="empty-state-text">No data yet. Keep browsing!</p></div>';
     } else {
       const maxTime = Math.max(...dayEntries.map(e => e.time), 1);
+      console.log('[Popup] Last7Days - Max time:', maxTime);
       graphBars.innerHTML = dayEntries.map(({ dateKey, time }) => {
         const percentage = (time / maxTime) * 100;
         const isToday = dateKey === getTodayDateKey();
@@ -325,6 +356,7 @@ async function updateAllViews() {
   showLoading();
   try {
     console.log('[Popup] Updating all views...');
+    updateDateHeader();
     await Promise.all([
       updateCompactView(),
       updateTodayContent(),
@@ -402,6 +434,7 @@ function startAutoRefresh() {
   
   refreshInterval = setInterval(async () => {
     try {
+      updateDateHeader();
       if (currentView === 'compact') {
         await updateCompactView();
       } else {

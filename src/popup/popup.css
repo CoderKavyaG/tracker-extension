@@ -316,6 +316,29 @@ html, body {
     background-color: #fff;
 }
 
+/* ============ DATE HEADER ============ */
+
+.date-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 13px;
+    color: #666;
+}
+
+#dateDisplay {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+#dayDisplay {
+    color: #999;
+}
+
 .tab-content {
     display: none;
 }
