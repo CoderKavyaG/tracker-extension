@@ -320,7 +320,7 @@ async function updateLast7DaysContent() {
         // Use square root scaling for DRAMATIC visual distinction
         // This makes smaller values appear much more distinct
         const sqrtRatio = Math.sqrt(time / maxTime);
-        const percentage = Math.max((sqrtRatio * 100), 2);
+        const percentage = Math.max((sqrtRatio * 85), 2); // 2% min, 85% max to prevent overflow
         const isToday = dateKey === getTodayDateKey();
         const dayOfWeek = getDayOfWeek(dateKey);
         
