@@ -8,9 +8,11 @@
 
 html, body {
     width: 360px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background-color: #0f1419;
-    color: #e0e0e0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #0d0d0d;
+    color: #e8e8e8;
+    font-weight: 400;
+    letter-spacing: -0.3px;
 }
 
 /* ============ UTILITIES ============ */
@@ -23,7 +25,7 @@ html, body {
 
 .container {
     width: 100%;
-    background-color: #0f1419;
+    background-color: #0d0d0d;
     display: flex;
     flex-direction: column;
     max-height: 600px;
@@ -37,8 +39,8 @@ html, body {
     align-items: center;
     justify-content: space-between;
     padding: 16px;
-    border-bottom: 1px solid #1e2531;
-    background: linear-gradient(135deg, #141b26 0%, #0f1419 100%);
+    border-bottom: 1px solid #2a2a2a;
+    background-color: #0d0d0d;
 }
 
 .header h1 {
@@ -47,6 +49,7 @@ html, body {
     flex: 1;
     text-align: center;
     color: #ffffff;
+    letter-spacing: -0.5px;
 }
 
 .back-btn,
@@ -56,7 +59,7 @@ html, body {
     cursor: pointer;
     font-size: 20px;
     padding: 4px 8px;
-    color: #64b5f6;
+    color: #a0a0a0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,35 +69,32 @@ html, body {
 
 .back-btn:hover,
 .expand-btn:hover {
-    background-color: rgba(100, 181, 246, 0.1);
-    color: #90caf9;
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #e8e8e8;
 }
 
 /* ============ TOTAL TIME SECTION ============ */
 
 .total-time-section {
     padding: 24px 16px;
-    background: linear-gradient(135deg, #1a2332 0%, #141b26 100%);
-    border-bottom: 1px solid #1e2531;
+    background-color: #0d0d0d;
+    border-bottom: 1px solid #2a2a2a;
     text-align: center;
 }
 
 .total-time-label {
-    font-size: 12px;
-    color: #90a4ae;
+    font-size: 11px;
+    color: #808080;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin-bottom: 12px;
     font-weight: 600;
 }
 
 .total-time-value {
-    font-size: 42px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 48px;
+    font-weight: 900;
+    color: #ffffff;
     font-variant-numeric: tabular-nums;
 }
 
@@ -103,18 +103,18 @@ html, body {
 .section-title {
     font-size: 11px;
     font-weight: 700;
-    color: #64b5f6;
+    color: #808080;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     padding: 16px 16px 8px;
-    background-color: #0f1419;
+    background-color: #0d0d0d;
 }
 
 /* ============ DOMAIN LIST (COMPACT) ============ */
 
 .top-domains {
     padding: 0 16px 16px;
-    background-color: #0f1419;
+    background-color: #0d0d0d;
 }
 
 .domain-list {
@@ -128,23 +128,23 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 14px;
-    background: linear-gradient(135deg, #1a2332 0%, #141b26 100%);
-    border: 1px solid #1e2531;
-    border-left: 3px solid #42a5f5;
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid #505050;
     border-radius: 6px;
     font-size: 13px;
     transition: all 0.2s;
 }
 
 .domain-item:hover {
-    background: linear-gradient(135deg, #1e2935 0%, #1a2332 100%);
-    border-left-color: #64b5f6;
-    transform: translateX(4px);
+    background-color: #232323;
+    border-left-color: #707070;
+    transform: translateX(2px);
 }
 
 .domain-name {
     font-weight: 600;
-    color: #e0e0e0;
+    color: #e8e8e8;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -153,7 +153,7 @@ html, body {
 
 .domain-time {
     font-weight: 700;
-    color: #64b5f6;
+    color: #a0a0a0;
     font-variant-numeric: tabular-nums;
     margin-left: 12px;
 }
@@ -172,17 +172,17 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 13px 14px;
-    background: linear-gradient(135deg, #1a2332 0%, #141b26 100%);
-    border: 1px solid #1e2531;
-    border-left: 3px solid #42a5f5;
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid #505050;
     border-radius: 6px;
     font-size: 13px;
     transition: all 0.2s;
 }
 
 .domain-item-full:hover {
-    background: linear-gradient(135deg, #1e2935 0%, #1a2332 100%);
-    border-left-color: #64b5f6;
+    background-color: #232323;
+    border-left-color: #707070;
     transform: translateY(-1px);
 }
 
@@ -193,21 +193,21 @@ html, body {
 
 .domain-name-full {
     font-weight: 600;
-    color: #e0e0e0;
+    color: #e8e8e8;
     margin-bottom: 3px;
     word-break: break-word;
 }
 
 .domain-category {
     font-size: 11px;
-    color: #64b5f6;
+    color: #808080;
     font-weight: 600;
     text-transform: capitalize;
 }
 
 .domain-time-full {
     font-weight: 700;
-    color: #64b5f6;
+    color: #a0a0a0;
     font-variant-numeric: tabular-nums;
     margin-left: 12px;
     white-space: nowrap;
@@ -227,29 +227,29 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 14px 16px;
-    background: linear-gradient(135deg, #1a2332 0%, #141b26 100%);
-    border: 1px solid #1e2531;
-    border-left: 4px solid #42a5f5;
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 4px solid #505050;
     border-radius: 6px;
     font-size: 14px;
     transition: all 0.2s;
 }
 
 .category-item:hover {
-    background: linear-gradient(135deg, #1e2935 0%, #1a2332 100%);
-    border-left-color: #64b5f6;
+    background-color: #232323;
+    border-left-color: #707070;
     transform: translateY(-2px);
 }
 
 .category-name {
     font-weight: 600;
-    color: #e0e0e0;
+    color: #e8e8e8;
     font-size: 15px;
 }
 
 .category-time {
     font-weight: 700;
-    color: #64b5f6;
+    color: #a0a0a0;
     font-variant-numeric: tabular-nums;
     font-size: 16px;
 }
@@ -268,27 +268,27 @@ html, body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 14px;
-    background: linear-gradient(135deg, #1a2332 0%, #141b26 100%);
-    border: 1px solid #1e2531;
-    border-left: 3px solid #42a5f5;
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid #505050;
     border-radius: 6px;
     font-size: 13px;
     transition: all 0.2s;
 }
 
 .day-item:hover {
-    background: linear-gradient(135deg, #1e2935 0%, #1a2332 100%);
-    border-left-color: #64b5f6;
+    background-color: #232323;
+    border-left-color: #707070;
 }
 
 .day-label {
     font-weight: 600;
-    color: #e0e0e0;
+    color: #e8e8e8;
 }
 
 .day-time {
     font-weight: 700;
-    color: #64b5f6;
+    color: #a0a0a0;
     font-variant-numeric: tabular-nums;
 }
 
@@ -297,8 +297,8 @@ html, body {
 .tabs {
     display: flex;
     gap: 0;
-    background-color: #0f1419;
-    border-bottom: 2px solid #1e2531;
+    background-color: #0d0d0d;
+    border-bottom: 2px solid #2a2a2a;
     padding: 0;
     margin: 0;
 }
@@ -311,24 +311,24 @@ html, body {
     cursor: pointer;
     font-size: 12px;
     font-weight: 700;
-    color: #90a4ae;
+    color: #707070;
     border-bottom: 3px solid transparent;
     transition: all 0.3s;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-align: center;
 }
 
 .tab:hover {
-    color: #64b5f6;
-    background-color: rgba(66, 165, 245, 0.05);
+    color: #a0a0a0;
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
 .tab.active {
-    color: #64b5f6;
-    border-bottom-color: #64b5f6;
-    background-color: rgba(100, 181, 246, 0.05);
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.06);
 }
 
 /* ============ DATE HEADER ============ */
@@ -339,21 +339,21 @@ html, body {
     align-items: center;
     gap: 8px;
     padding: 12px 16px;
-    background-color: #141b26;
-    border-bottom: 1px solid #1e2531;
+    background-color: #0d0d0d;
+    border-bottom: 1px solid #2a2a2a;
     font-size: 13px;
-    color: #90a4ae;
+    color: #808080;
 }
 
-#dateDisplay {
+#dateDisplay,
+#dateDisplayCompact {
     font-weight: 700;
-    color: #64b5f6;
+    color: #e8e8e8;
 }
 
 #dayDisplay,
-#dateDisplayCompact,
 #dayDisplayCompact {
-    color: #64b5f6;
+    color: #808080;
 }
 
 .tab-content {
@@ -368,8 +368,8 @@ html, body {
 
 .action-bar {
     padding: 16px;
-    background: linear-gradient(135deg, #141b26 0%, #0f1419 100%);
-    border-top: 1px solid #1e2531;
+    background-color: #0d0d0d;
+    border-top: 1px solid #2a2a2a;
     display: flex;
     gap: 8px;
 }
@@ -380,7 +380,7 @@ html, body {
     border: none;
     border-radius: 6px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
     text-transform: uppercase;
@@ -388,24 +388,25 @@ html, body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #42a5f5 0%, #2196f3 100%);
-    color: #fff;
+    background-color: #ffffff;
+    color: #0d0d0d;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
-    transform: translateY(-2px);
+    background-color: #e8e8e8;
+    transform: translateY(-1px);
 }
 
 .btn-secondary {
-    background-color: #1a2332;
-    color: #64b5f6;
-    border: 1px solid #1e2531;
+    background-color: #1a1a1a;
+    color: #a0a0a0;
+    border: 1px solid #2a2a2a;
 }
 
 .btn-secondary:hover {
-    background-color: rgba(100, 181, 246, 0.1);
-    border-color: #42a5f5;
+    background-color: #232323;
+    color: #e8e8e8;
+    border-color: #3a3a3a;
 }
 
 .btn-secondary.destructive {
@@ -458,10 +459,10 @@ html, body {
 
 .graph-container {
     padding: 16px;
-    background: linear-gradient(135deg, #1a2332 0%, #141b26 100%);
+    background-color: #1a1a1a;
     border-radius: 8px;
     margin: 0 16px 16px;
-    border: 1px solid #1e2531;
+    border: 1px solid #2a2a2a;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -475,14 +476,14 @@ html, body {
 .graph-label {
     font-weight: 700;
     font-size: 13px;
-    color: #e0e0e0;
+    color: #e8e8e8;
 }
 
 .graph-legend {
     font-size: 11px;
-    color: #90a4ae;
+    color: #808080;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .graph-bars {
@@ -492,7 +493,7 @@ html, body {
     gap: 6px;
     height: 120px;
     padding: 8px 0;
-    border-top: 1px solid #1e2531;
+    border-top: 1px solid #2a2a2a;
 }
 
 .graph-bar {
@@ -505,22 +506,20 @@ html, body {
 
 .bar-column {
     width: 100%;
-    background: linear-gradient(180deg, #42a5f5 0%, #2196f3 100%);
+    background-color: #505050;
     border-radius: 3px 3px 0 0;
     min-height: 2px;
     max-height: 100px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(66, 165, 245, 0.4);
 }
 
 .bar-column:hover {
-    background: linear-gradient(180deg, #64b5f6 0%, #42a5f5 100%);
-    box-shadow: 0 6px 12px rgba(100, 181, 246, 0.5);
+    background-color: #707070;
 }
 
 .bar-label {
     font-size: 10px;
-    color: #90a4ae;
+    color: #808080;
     text-align: center;
     font-weight: 600;
     min-width: 35px;
@@ -528,7 +527,7 @@ html, body {
 
 .bar-time {
     font-size: 9px;
-    color: #64b5f6;
+    color: #a0a0a0;
     font-weight: 700;
     text-align: center;
     height: 12px;
@@ -541,8 +540,8 @@ html, body {
     width: 32px;
     height: 32px;
     margin: 40px auto 16px;
-    border: 3px solid #1e2531;
-    border-top-color: #64b5f6;
+    border: 3px solid #2a2a2a;
+    border-top-color: #505050;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
@@ -562,7 +561,7 @@ html, body {
 
 #loadingState p {
     font-size: 13px;
-    color: #90a4ae;
+    color: #808080;
 }
 
 /* ============ EMPTY STATE ============ */
@@ -570,7 +569,7 @@ html, body {
 .empty-state {
     padding: 40px 16px;
     text-align: center;
-    color: #90a4ae;
+    color: #808080;
 }
 
 .empty-state-text {
@@ -588,12 +587,12 @@ html, body {
 }
 
 .container::-webkit-scrollbar-thumb {
-    background-color: #1e2531;
+    background-color: #2a2a2a;
     border-radius: 3px;
 }
 
 .container::-webkit-scrollbar-thumb:hover {
-    background-color: #2c3e50;
+    background-color: #3a3a3a;
 }
 
 /* ============ RESPONSIVE ============ */

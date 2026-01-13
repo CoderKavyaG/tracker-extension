@@ -54,13 +54,9 @@ async function recordDomainTime(domain) {
  * Start tracking a new domain
  */
 function startTracking(domain, tabId, windowId) {
-  // First, record time for previous domain (if any)
-  if (
-    trackingState.currentDomain &&
-    trackingState.currentDomain !== domain &&
-    trackingState.startTime
-  ) {
-    console.log('[Tracker] Domain changed, recording time for previous domain');
+  // First, record time for previous domain (if any) - ALWAYS record before switching
+  if (trackingState.currentDomain && trackingState.startTime) {
+    console.log('[Tracker] Recording time for domain before switch:', trackingState.currentDomain);
     recordDomainTime(trackingState.currentDomain);
   }
 
