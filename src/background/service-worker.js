@@ -241,10 +241,11 @@ async function initializeTracking() {
 console.log('[Tracker] Service worker script loading...');
 initializeTracking();
 
-// ============ PERIODIC FLUSH (every 1 minute) ============
+// ============ PERIODIC FLUSH (every 30 seconds) ============
 /**
  * Periodically save any pending tracking data
  * This ensures data isn't lost if browser closes unexpectedly
+ * Also keeps the service worker alive
  */
 setInterval(async () => {
   if (trackingState.currentDomain && trackingState.startTime) {
@@ -256,13 +257,15 @@ setInterval(async () => {
       const dateKey = getTodayDateKey();
       await addDomainTime(dateKey, domain, elapsedTime);
       console.log(
-        `[Tracker] Periodic flush: ${domain} ${elapsedTime}ms`
+        `[Tracker] Periodic flush: ${domain} ${elapsedTime}ms (${(elapsedTime / 1000).toFixed(2)}s)`
       );
       
       // Restart tracking from now
       trackingState.startTime = Date.now();
     }
+  } else {
+    console.log('[Tracker] Periodic flush - no active tracking');
   }
-}, 60000); // 60 seconds
+}, 30000); // 30 seconds - keep-alive to prevent service worker suspension
 
 console.log('[Tracker] Service worker started');

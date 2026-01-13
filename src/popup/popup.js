@@ -315,18 +315,22 @@ async function updateLast7DaysContent() {
       graphBars.innerHTML = '<div class="empty-state"><p class="empty-state-text">No data yet. Keep browsing!</p></div>';
     } else {
       const maxTime = Math.max(...dayEntries.map(e => e.time), 1);
-      console.log('[Popup] Last7Days - Max time:', maxTime);
-      graphBars.innerHTML = dayEntries.map(({ dateKey, time }) => {
-        // Use quadratic scaling for better visual distinction between bars
-        const percentage = Math.max((time / maxTime) * 100, 8);
+      console.log('[Popup] Last7Days - Max time:', maxTime, 'milliseconds');
+      graphBars.innerHTML = dayEntries.map(({ dateKey, time }, index) => {
+        // Use non-linear scaling for better visual distinction
+        // This makes smaller differences appear bigger
+        const percentage = Math.max((Math.pow(time / maxTime, 0.7) * 100), 6);
         const isToday = dateKey === getTodayDateKey();
-        const dayLabel = isToday ? 'Today' : formatDateKey(dateKey);
         const dayOfWeek = getDayOfWeek(dateKey);
+        
+        // Color variation based on time - darker bars for higher values
+        const colorIntensity = Math.round(100 + (time / maxTime) * 150); // 100-250
+        const barColor = `hsl(0, 0%, ${colorIntensity / 3}%)`; // Creates different gray levels
         
         return `
           <div class="graph-bar">
             <div class="bar-time">${formatTimeShort(time)}</div>
-            <div class="bar-column" style="height: ${percentage}%;" title="${formatTime(time)}"></div>
+            <div class="bar-column" style="height: ${percentage}%; background: linear-gradient(180deg, #${Math.round(colorIntensity * 2).toString(16)} 0%, #${Math.round(colorIntensity).toString(16)} 100%);" title="Day: ${dayOfWeek}\nDate: ${dateKey}\nTime: ${formatTime(time)}"></div>
             <div class="bar-label">${dayOfWeek}</div>
           </div>
         `;
